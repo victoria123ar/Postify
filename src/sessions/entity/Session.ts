@@ -1,8 +1,11 @@
+import { randomUUID } from "crypto";
+
 export class Session {
   constructor(
     private _email: string,
     private _password: string,
-//    private _token: string,
+    private readonly id: string = randomUUID(),
+    private readonly token: string = randomUUID(),
   ) {}
 
   set email(email: string) {
@@ -18,11 +21,4 @@ export class Session {
   get password() {
     return this._password;
   }
-
-//  get token(): string {
-//    return this._token;
-//  }
-//  set token(token: string) {
-//    this._token = token;
-//  }
 }

@@ -1,3 +1,5 @@
+import { randomUUID } from "crypto";
+
 export class Publication {
     constructor(
       private _image: string,
@@ -6,6 +8,7 @@ export class Publication {
       private _dateToPublish: string,
       private _published: string,
       private _socialMedia: string,
+      private readonly id: string = randomUUID(),
     ) {}
 
     public get image(): string {
