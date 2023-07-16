@@ -12,7 +12,7 @@ import { User } from '@prisma/client';
 @Injectable()
 export class AuthService {
   private AUDIENCE = 'users';
-  private ISSUER = 'Driven';
+  private ISSUER = 'Victoria';
 
   constructor(
     private readonly usersRepository: UsersRepository,
@@ -26,8 +26,7 @@ export class AuthService {
     const validPassword = bcrypt.compareSync(password, user.password);
     if (!validPassword)
       throw new UnauthorizedException('Email ou senha inválidos');
-console.log(validPassword)
-console.log(user)
+
     return this.createToken(user);
   }
 
