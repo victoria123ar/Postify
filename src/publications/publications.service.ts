@@ -1,23 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { Publication } from './entity/Publication';
+import { PublicationsRepository } from './repository/publication.repository';
+import { PublicationDTO } from './dto/publication.dto';
 
 @Injectable()
-export class PublicationsService {
-  publications = [];
 
-  createPublication(body: Publication) {
-    const publication = new Publication(
-      body.image,
-      body.title,
-      body.text,
-      body.dateToPublish,
-      body.published,
-      body.socialMedia,
-    );
-    return this.publications.push(publication);
+export class PublicationsService {
+
+  constructor(
+    private readonly publicationsRepository: PublicationsRepository,
+  ) {}
+
+  createPublication(body: PublicationDTO, userId: number) {
+    return this.publicationsRepository.createPublication(userId, body);
   }
 
-  getPublications() {
-    return this.publications;
+  getPublications(userId: number) {
+    return this.publicationsRepository.getPublications(userId);
   }
 }

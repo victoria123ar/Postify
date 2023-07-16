@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int          @id @default(autoincrement())
+  name           String       @unique @db.VarChar(50)
+  email          String       @unique @db.VarChar(100)
+  password       String       @db.Text()
+  avatar         String       @db.Text()
+  createdAt      DateTime     @default(now())
+  Session        Session[] 
+  Publication    Publication[]
+
+    @@map("users")    
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String
+  createdAt DateTime @default(now())
+
+  	@@map("sessions")
+}
+
+model Publication {
+  id                Int            @id @default(autoincrement())
+  userId            Int           
+  User              User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  image             String         @db.Text()
+  title             String         @db.Text()
+  text              String         @db.Text()
+  dateToPublish     DateTime       @default(now())
+  published         Boolean        @default(false)
+  socialMedia       String         @db.Text()
+  createdAt         DateTime       @default(now())
+
+  @@map("publicatons") 
+}
